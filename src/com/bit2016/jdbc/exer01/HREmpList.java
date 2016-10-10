@@ -1,5 +1,4 @@
-package jdbc;
-
+package com.bit2016.jdbc.exer01;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectionTest {
+public class HREmpList {
+
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -20,12 +21,9 @@ public class ConnectionTest {
 			String url="jdbc:oracle:thin:@localhost:1521:xe";
 			
 			conn=DriverManager.getConnection(url,"hr","hr");
-			//3.statement 객체 생성
 			stmt=conn.createStatement();
-			//4.sql문
 			String sql="select e.first_name,m.last_name from employees e,employees m where e.manager_id=m.employee_id order by e.first_name desc";
 			rs=stmt.executeQuery(sql);
-			//5.결과가져오기
 			while(rs.next())
 			{
 				String employeeId=rs.getString(1);
@@ -33,26 +31,27 @@ public class ConnectionTest {
 			
 				System.out.println(employeeId+", "+firstName);
 			}
-			
+
 		}catch(ClassNotFoundException e){
 			System.out.println("드라이버 로딩 실패"+e);
 		}catch(SQLException e){
 			System.out.println("error"+e);
 		}finally{
-			//자원정리
 			try{
-				if(rs!=null)
-					rs.close();
 				if(conn!=null)
 					conn.close();
 				if(stmt!=null)
 					stmt.close();
-			}catch(SQLException e)
-			{
-				e.printStackTrace();
-			}
+				if(rs!=null)
+					rs.close();
+		}catch(SQLException e)
+		{
+			e.printStackTrace();
+			
+			
 		}
-
+			}
 	}
-
 }
+
+
